@@ -1,11 +1,11 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import OnboardingScreen from './screens/OnboardingScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import TabNavigator from './navigation/TabNavigator';
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <OnboardingScreen />
-    </SafeAreaView>
+    <NavigationContainer>
+      <TabNavigator />
+    </NavigationContainer>
   );
 }
