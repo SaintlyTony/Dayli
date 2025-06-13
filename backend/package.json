@@ -1,0 +1,21 @@
+{
+  "name": "nutrigo-backend",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "jest": "^30.0.0",
+    "nodemon": "^3.1.0",
+    "supertest": "^7.1.1"
+  }
+}

@@ -1,0 +1,28 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn.lock
+
+# React Native
+ios/build/
+android/build/
+*.iml
+.gradle/
+*.keystore
+*.jar
+*.apk
+*.ap_
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.packages
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+pubspec.lock
+
+# General
+.DS_Store
+.idea/
+.vscode/

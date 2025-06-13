@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>NutriGo Admin</title>
+  <style>
+    body { font-family: sans-serif; }
+    section { margin-bottom: 20px; }
+    input, button { margin: 5px; }
+  </style>
+</head>
+<body>
+  <h1>NutriGo Admin</h1>
+  <section id="login">
+    <h2>Вход</h2>
+    <input id="user" placeholder="admin" />
+    <input id="pass" type="password" placeholder="secret" />
+    <button onclick="login()">Войти</button>
+  </section>
+  <section id="menu" style="display:none">
+    <h2>Меню</h2>
+    <ul id="menu-list"></ul>
+    <input id="meal-name" placeholder="Название" />
+    <input id="meal-cal" placeholder="Калории" />
+    <button onclick="addMeal()">Добавить блюдо</button>
+  </section>
+  <section id="orders" style="display:none">
+    <h2>Заказы</h2>
+    <ul id="order-list"></ul>
+  </section>
+<script>
+let token = '';
+const base = 'http://localhost:3000';
+function login() {
+  fetch(base + '/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: document.getElementById('user').value, password: document.getElementById('pass').value })
+  })
+    .then(r => r.json())
+    .then(d => { token = d.token; loadMenu(); loadOrders(); document.getElementById('menu').style.display='block'; document.getElementById('orders').style.display='block'; });
+}
+function loadMenu() {
+  fetch(base + '/menu').then(r=>r.json()).then(d=>{
+    const list=document.getElementById('menu-list');
+    list.innerHTML='';
+    d.menu.forEach(m=>{const li=document.createElement('li');li.textContent=`${m.name} (${m.calories})`;list.appendChild(li);});
+  });
+}
+function addMeal(){
+  fetch(base + '/menu',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({name:document.getElementById('meal-name').value,calories:+document.getElementById('meal-cal').value})}).then(loadMenu);
+}
+function loadOrders(){
+  fetch(base + '/orders',{headers:{Authorization:'Bearer '+token}}).then(r=>r.json()).then(d=>{
+    const list=document.getElementById('order-list');
+    list.innerHTML='';
+    (d.orders||[]).forEach(o=>{const li=document.createElement('li');li.textContent=`${o.id}: ${o.address}`;list.appendChild(li);});
+  });
+}
+</script>
+</body>
+</html>
